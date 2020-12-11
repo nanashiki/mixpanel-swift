@@ -22,14 +22,14 @@ class AutomaticProperties {
 
     static var properties: InternalProperties = {
         var p = InternalProperties()
-        #if os(iOS) || os(tvOS)
+        #if (os(iOS) && !targetEnvironment(macCatalyst)) || os(tvOS)
         let screenSize = UIScreen.main.bounds.size
         p["$screen_height"]     = Int(screenSize.height)
         p["$screen_width"]      = Int(screenSize.width)
         p["$os"]                = UIDevice.current.systemName
         p["$os_version"]        = UIDevice.current.systemVersion
 
-        #elseif os(macOS)
+        #elseif os(macOS) || targetEnvironment(macCatalyst)
         if let screenSize = NSScreen.main?.frame.size {
             p["$screen_height"]     = Int(screenSize.height)
             p["$screen_width"]      = Int(screenSize.width)
