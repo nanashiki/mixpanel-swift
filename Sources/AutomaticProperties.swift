@@ -29,7 +29,14 @@ class AutomaticProperties {
         p["$os"]                = UIDevice.current.systemName
         p["$os_version"]        = UIDevice.current.systemVersion
 
-        #elseif os(macOS) || targetEnvironment(macCatalyst)
+        #elseif targetEnvironment(macCatalyst)
+        let screenSize = UIScreen.main.bounds.size
+        p["$screen_height"]     = Int(screenSize.height)
+        p["$screen_width"]      = Int(screenSize.width)
+        p["$os"]                = "macOS"
+        p["$os_version"]        = ProcessInfo.processInfo.operatingSystemVersionString
+
+        #elseif os(macOS)
         if let screenSize = NSScreen.main?.frame.size {
             p["$screen_height"]     = Int(screenSize.height)
             p["$screen_width"]      = Int(screenSize.width)
